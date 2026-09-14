@@ -47,11 +47,11 @@ def calculate_y(
     # TODO: Implement polynomial evaluation without a built-in polynomial helper.
     y = coefficients[0]
     count = 1
-    for coef in coefficients[1:]
-       # print("Y: " + str(y))
-       # print("EQ: " + str(coef) + str(x) + "^" + str(count))
+    for coef in coefficients[1:]:
+        print("Y: " + str(y))
+        print("EQ: " + str(coef) + str(x) + "^" + str(count))
         y += coef * (x ** count)
-      #  print("After Y: " + str(y))
+        print("After Y: " + str(y))
         count += 1
     return y
 
@@ -126,7 +126,7 @@ if __name__ == "__main__":
     input2 =  np.array([1, 2, 3])
     coeffs1 = [1,2]
     coeffs2 = [2,3,4]
-    #print("t1: should return 21\n")
-    #print("t1: " + str(calculate_y(input1,coeffs1)))
-    #print("\nt1: should return array\n")
-    #print("t2: " + str(calculate_y(input2, coeffs2)))
+    print("t1: should return 7\n")
+    print("t1: " + str(calculate_y(input1,coeffs1)))
+    print("\nt1: should return array\n")
+    print("t2: " + str(calculate_y(input2, coeffs2)))
