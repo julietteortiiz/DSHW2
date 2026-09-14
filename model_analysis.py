@@ -45,8 +45,8 @@ def calculate_y(
 ) -> Union[float, np.ndarray]:
     """Evaluate a polynomial whose coefficients are constant-term first."""
     # TODO: Implement polynomial evaluation without a built-in polynomial helper.
-    y = 0
-    count = coefficients[0]
+    y = coefficients[0]
+    count = 1
     for coef in coefficients[1:]
        # print("Y: " + str(y))
        # print("EQ: " + str(coef) + str(x) + "^" + str(count))
