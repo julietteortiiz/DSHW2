@@ -46,13 +46,13 @@ def calculate_y(
     """Evaluate a polynomial whose coefficients are constant-term first."""
     # TODO: Implement polynomial evaluation without a built-in polynomial helper.
     y = 0
-    count = len(coefficients)
-    for coef in coefficients:
+    count = coefficients[0]
+    for coef in coefficients[1:]
        # print("Y: " + str(y))
        # print("EQ: " + str(coef) + str(x) + "^" + str(count))
         y += coef * (x ** count)
       #  print("After Y: " + str(y))
-        count -= 1
+        count += 1
     return y
 
 def calculate_residuals(
