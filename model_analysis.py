@@ -48,7 +48,11 @@ def calculate_y(
     y = 0
     count = 1
     for coef in coefficients:
-        y = coef * (x ** count)
+        print("Y: " + str(y))
+        print("EQ: " + str(coef) + str(x) + "^" + str(count))
+        y += coef * (x ** count)
+        print("After Y: " + str(y))
+        count += 1
     return y
 
 def calculate_residuals(
@@ -117,11 +121,12 @@ def main() -> None:
 if __name__ == "__main__":
     main()
     data2013 = read_in_data("data/sea_ice_2013-2020.csv", x_type=["int", "float"])
-    fig1 = plot_scatter(data2013[0], data2013[1], color = "blue")
-    print(type(fig1))
-    save_figure(fig1, "part1.pdf")
     
     input1 = 3
-    input2 =  np.array(1, 2, 3)
-    print(calculate_y(input1, DEGREE_1_COEFFICIENTS))
-    print(calculate_y(input2, DEGREE_2_COEFFICIENTS))
+    input2 =  np.array([1, 2, 3])
+    coeffs1 = [1,2]
+    coeffs2 = [2,3,4]
+    print("t1: should return 21\n")
+    print("t1: " + str(calculate_y(input1,coeffs1)))
+    print("\nt1: should return array\n")
+    print("t2: " + str(calculate_y(input2, coeffs2)))
