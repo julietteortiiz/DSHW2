@@ -27,7 +27,6 @@ def read_in_data(
     x_type: Literal["int", "float"],
 ) -> tuple[list[XValue], list[float]]:
     """Return the x- and y-columns from a two-column CSV file."""
-    # TODO: Read each row, converting x according to x_type and y to float.
     data = [list(), list()]
     with open(file_path, "r") as file:
         reader = csv.reader(file)
@@ -37,21 +36,20 @@ def read_in_data(
             data[0].append(x)
             data[1].append(y)
     return data
-        
-
-
-
-        
+             
 
 
 def calculate_y(
-    x: Union[Number, np.ndarray],
+    x: Union[Number, np.ndarray], #indicates that x can be a scalar or numpy array
     coefficients: Sequence[float],
 ) -> Union[float, np.ndarray]:
     """Evaluate a polynomial whose coefficients are constant-term first."""
     # TODO: Implement polynomial evaluation without a built-in polynomial helper.
-    raise NotImplementedError
-
+    y = 0
+    count = 1
+    for coef in coefficients:
+        y = coef * (x ** count)
+    return y
 
 def calculate_residuals(
     x_values: Sequence[Number],
@@ -118,4 +116,12 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    print(read_in_data("data/sea_ice_2013-2020.csv", x_type=["int", "float"]))
+    data2013 = read_in_data("data/sea_ice_2013-2020.csv", x_type=["int", "float"])
+    fig1 = plot_scatter(data2013[0], data2013[1], color = "blue")
+    print(type(fig1))
+    save_figure(fig1, "part1.pdf")
+    
+    input1 = 3
+    input2 =  np.array(1, 2, 3)
+    print(calculate_y(input1, DEGREE_1_COEFFICIENTS))
+    print(calculate_y(input2, DEGREE_2_COEFFICIENTS))
