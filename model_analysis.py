@@ -48,10 +48,10 @@ def calculate_y(
     y = coefficients[0]
     count = 1
     for coef in coefficients[1:]:
-        #print("Y: " + str(y))
-        #print("EQ: " + str(coef) + str(x) + "^" + str(count))
+        print("Y: " + str(y))
+        print("EQ: " + str(coef) + str(x) + "^" + str(count))
         y += coef * (x ** count)
-        #print("After Y: " + str(y))
+        print("After Y: " + str(y))
         count += 1
     return y
 
@@ -61,9 +61,10 @@ def calculate_residuals(
     coefficients: Sequence[float],
 ) -> list[float]:
     """Return observed-minus-predicted residuals."""
+    ydeg1 = calculate_y(x_values, DEGREE_1_COEFFICIENTS)
     residuals = list()
-    for i in range(len(x_values)):
-        residual = y_values[i] - x_values[i]
+    for i in range(len(y_values)):
+        residual = y_values[i] - ydeg1[i]
         residuals.append(residual)    
     return residuals
 
@@ -119,21 +120,14 @@ def save_figure(figure: plt.Figure, filename: str) -> None:
 
 def main() -> None:
     """Run all required analyses and create the figures listed in the handout."""
-    # TODO: Organize Parts 1--4 here. Keep calculations in the functions above.
-    pass
-
-
-if __name__ == "__main__":
-    main()
-
     #Read In Data, convert to correct type
     data2013 = read_in_data("data/sea_ice_2013-2020.csv", x_type=["int", "float"])
     print(data2013)
     
 
     #split into x and y values
-    x_values = data2013[0]
-    y_values = data2013[1]
+    x_values = np.array(data2013[0])
+    y_values = np.array(data2013[1])
     fig1, axs = plt.subplots()
     plot_scatter(axs, x_values, y_values, label = "Initial Data", color = "Blue")
     axs.set_xlabel("Year")
@@ -141,12 +135,14 @@ if __name__ == "__main__":
     save_figure(fig1, "Initial Data")
     
 
-
     #Calculating y with degree1 coefficients
-    y_deg1 = calculate_y(x_values, DEGREE_1_COEFFICIENTS)
-    calculate_residuals(y_values, y_deg1)
+    residuals1 = calculate_residuals(x_values, y_values, DEGREE_1_COEFFICIENTS)
     
     #Calculating y with degree2 coefficients
-    y_deg2 = calculate_y(x_values, DEGREE_2_COEFFICIENTS)
-    calculate_residuals(y_values, y_deg2)
+    residuals2 = calculate_residuals(x_values, y_values, DEGREE_2_COEFFICIENTS)
+
+
+if __name__ == "__main__":
+    main()
+
     
