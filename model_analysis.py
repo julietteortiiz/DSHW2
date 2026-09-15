@@ -83,9 +83,11 @@ def plot_scatter(
     color: str,
 ) -> None:
     """Add labeled scatter data to axes."""
-    # TODO
-    raise NotImplementedError
+    axes.scatter(x_values, y_values)
+    axes.set_title(label)
+    axes.tick_params(labelcolor=color)
 
+    
 
 def plot_polynomial(
     axes: Axes,
@@ -123,13 +125,28 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+    #Read In Data, convert to correct type
     data2013 = read_in_data("data/sea_ice_2013-2020.csv", x_type=["int", "float"])
+    print(data2013)
     
-    #input1 = 3
-    #input2 =  np.array([1, 2, 3])
-    #coeffs1 = [1,2]
-    #coeffs2 = [2,3,4]
-    #print("t1: should return 7\n")
-    #print("t1: " + str(calculate_y(input1,coeffs1)))
-    #print("\nt1: should return array\n")
-    #print("t2: " + str(calculate_y(input2, coeffs2)))
+
+    #split into x and y values
+    x_values = data2013[0]
+    y_values = data2013[1]
+    fig1, axs = plt.subplots()
+    plot_scatter(axs, x_values, y_values, label = "Initial Data", color = "Blue")
+    axs.set_xlabel("Year")
+    axs.set_ylabel("Sea Ice %")
+    save_figure(fig1, "Initial Data")
+    
+
+
+    #Calculating y with degree1 coefficients
+    y_deg1 = calculate_y(x_values, DEGREE_1_COEFFICIENTS)
+    calculate_residuals(y_values, y_deg1)
+    
+    #Calculating y with degree2 coefficients
+    y_deg2 = calculate_y(x_values, DEGREE_2_COEFFICIENTS)
+    calculate_residuals(y_values, y_deg2)
+    
