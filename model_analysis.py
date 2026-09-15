@@ -44,14 +44,14 @@ def calculate_y(
     coefficients: Sequence[float],
 ) -> Union[float, np.ndarray]:
     """Evaluate a polynomial whose coefficients are constant-term first."""
-    # TODO: Implement polynomial evaluation without a built-in polynomial helper.
+    # TODO: test for edge case
     y = coefficients[0]
     count = 1
     for coef in coefficients[1:]:
-        print("Y: " + str(y))
-        print("EQ: " + str(coef) + str(x) + "^" + str(count))
+        #print("Y: " + str(y))
+        #print("EQ: " + str(coef) + str(x) + "^" + str(count))
         y += coef * (x ** count)
-        print("After Y: " + str(y))
+        #print("After Y: " + str(y))
         count += 1
     return y
 
@@ -61,8 +61,11 @@ def calculate_residuals(
     coefficients: Sequence[float],
 ) -> list[float]:
     """Return observed-minus-predicted residuals."""
-    # TODO
-    raise NotImplementedError
+    residuals = list()
+    for i in range(len(x_values)):
+        residual = y_values[i] - x_values[i]
+        residuals.append(residual)    
+    return residuals
 
 
 def residual_sum_of_squares(residuals: Sequence[Number]) -> float:
@@ -122,11 +125,11 @@ if __name__ == "__main__":
     main()
     data2013 = read_in_data("data/sea_ice_2013-2020.csv", x_type=["int", "float"])
     
-    input1 = 3
-    input2 =  np.array([1, 2, 3])
-    coeffs1 = [1,2]
-    coeffs2 = [2,3,4]
-    print("t1: should return 7\n")
-    print("t1: " + str(calculate_y(input1,coeffs1)))
-    print("\nt1: should return array\n")
-    print("t2: " + str(calculate_y(input2, coeffs2)))
+    #input1 = 3
+    #input2 =  np.array([1, 2, 3])
+    #coeffs1 = [1,2]
+    #coeffs2 = [2,3,4]
+    #print("t1: should return 7\n")
+    #print("t1: " + str(calculate_y(input1,coeffs1)))
+    #print("\nt1: should return array\n")
+    #print("t2: " + str(calculate_y(input2, coeffs2)))
