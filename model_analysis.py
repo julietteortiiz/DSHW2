@@ -58,7 +58,13 @@ def calculate_residuals(
     coefficients: Sequence[float],
 ) -> list[float]:
     """Return observed-minus-predicted residuals."""
-
+    residuals = list()
+    i = 0
+    for x in x_values:
+        pred_y = calculate_y(x, coefficients)
+        residuals.append(y_values[i] - pred_y)
+        i += 1
+    return residuals
 
 def residual_sum_of_squares(residuals: Sequence[Number]) -> float:
     """Return the sum of the squared residuals."""
@@ -143,6 +149,11 @@ def main() -> None:
     fig3, axs = plt.subplots()
     plot_polynomial(axs, x_values[0], x_values[len(x_values)-1], DEGREE_2_COEFFICIENTS, label = "Degree 2 Polynomial", color = "Blue")
     save_figure(fig3, "part3.pdf")
+
+    #Calculate Regressions
+    calculate_residuals(x_values, y_values, DEGREE_1_COEFFICIENTS)
+    calculate_residuals(x_values, y_values, DEGREE_2_COEFFICIENTS)
+
 
 
 if __name__ == "__main__":
