@@ -61,12 +61,6 @@ def calculate_residuals(
     coefficients: Sequence[float],
 ) -> list[float]:
     """Return observed-minus-predicted residuals."""
-    ydeg1 = calculate_y(x_values, DEGREE_1_COEFFICIENTS)
-    residuals = list()
-    for i in range(len(y_values)):
-        residual = y_values[i] - ydeg1[i]
-        residuals.append(residual)    
-    return residuals
 
 
 def residual_sum_of_squares(residuals: Sequence[Number]) -> float:
@@ -101,8 +95,14 @@ def plot_polynomial(
 ) -> None:
     """Add a polynomial curve to axes over the requested x-range."""
     # TODO: np.linspace is useful here.
-    raise NotImplementedError
-
+    x = np.linspace(x_start, x_end, 100)
+    y = list()
+    for i in x:
+        y.append(calculate_y(i, coefficients))
+    axes.plot(x,y)
+    axes.set_title(label)
+    axes.tick_params(labelcolor=color)
+    
 
 def plot_elbow(axes: Axes, rss_values: Sequence[Number]) -> None:
     """Plot polynomial degree against RSS."""
@@ -126,20 +126,26 @@ def main() -> None:
     
 
     #split into x and y values
-    x_values = np.array(data2013[0])
-    y_values = np.array(data2013[1])
+    x_values = data2013[0]
+    y_values = data2013[1]
     fig1, axs = plt.subplots()
     plot_scatter(axs, x_values, y_values, label = "Initial Data", color = "Blue")
     axs.set_xlabel("Year")
     axs.set_ylabel("Sea Ice %")
-    save_figure(fig1, "Initial Data")
+    save_figure(fig1, "part1.pdf")
     
 
-    #Calculating y with degree1 coefficients
-    residuals1 = calculate_residuals(x_values, y_values, DEGREE_1_COEFFICIENTS)
-    
-    #Calculating y with degree2 coefficients
-    residuals2 = calculate_residuals(x_values, y_values, DEGREE_2_COEFFICIENTS)
+    #Calculate Y
+    x_np = np.array(x_values)
+    deg1 = calculate_y(x_np, DEGREE_1_COEFFICIENTS)
+    fig2, axs = plt.subplots()
+    plot_polynomial(axs, x_values[0], x_values[len(x_values)-1], DEGREE_1_COEFFICIENTS, label = "Degree 1 Polynomial", color = "Blue")
+    save_figure(fig2, "part2.pdf")
+
+    deg2 = calculate_y(x_np, DEGREE_2_COEFFICIENTS)
+    fig3, axs = plt.subplots()
+    plot_polynomial(axs, x_values[0], x_values[len(x_values)-1], DEGREE_2_COEFFICIENTS, label = "Degree 2 Polynomial", color = "Blue")
+    save_figure(fig3, "part3.pdf")
 
 
 if __name__ == "__main__":
