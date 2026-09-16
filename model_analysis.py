@@ -161,7 +161,7 @@ def main() -> None:
     fig5, axs = plt.subplots()
     axs.set_title("1979 Polynomial 2nd Degree Residuals")
     plot_scatter(axs, x_values, r2, label="Residuals for Degree2", color = "Blue")
-    save_figure(fig4, "part2_residuals2.pdf")
+    save_figure(fig5, "part2_residuals2.pdf")
 
     #PART3
     data2013 = read_in_data("data/sea_ice_2013-2020.csv", x_type=["int", "float"])
@@ -179,6 +179,42 @@ def main() -> None:
     plot_polynomial(axs, 2013, 2020, DEGREE_2_COEFFICIENTS, label = "Degree 2 Polynomial", color = "Red")
     axs.set_title("1979 and 2013 Degree 2")
     save_figure(fig7, "part3_pred2.pdf")
+
+    #PART4 - CHOOSING POLYNOMIAL DEGREE
+
+    
+    POLYNOMIAL_COEFFICIENTS = [
+    #[1.13010595],
+    [2.4464070947147207, -2.816353589568698],
+    [2.522610178119313, -3.27003073191282, 0.4743087284609393],
+    [1.2231425230496584, 10.649616212253513, -34.083679747347574, 23.590230897814727],
+    [0.8075214798200756, 17.32934850900337, -62.32907523274797, 66.75220156315058, -21.61184507602993],
+    [1.1537400009153576, 9.784042834672174, -14.963934203443742, -54.05134690879839, 111.9406595086277, -53.20467363235635],
+    [1.6031281515537332, -2.212955964351817, 87.09165569133722, -440.6384252637192, 832.5418657076268, -698.5859135919, 221.439066525518],
+    [1.0048620515132924, 17.4112052205856, -133.45588391947206, 713.2351017847259, -2320.831952624806, 3938.208550304347, -3249.3507974432723, 1036.2869129041017],
+    [0.8889729225247591, 21.927863684690806, -196.3956341264095, 1135.1023058754872, -3863.15628401735, 7177.078002707203, -7143.712758937181, 3524.932857125692, -654.5246542101304],
+    [6.455577860121968, -214.55025432038786, 3518.6484115354933, -28016.264919570815, 126197.74461140906, -343436.25785927917, 574211.0815161027, -575789.2765246094, 317309.99905972165, -73803.67907566673],
+    [5.571266255808752, -173.07147738443035, 2771.613686468927, -21023.423222254118, 87668.04317051847, -210606.67961073387, 280101.8712329003, -158297.13764038868, -49517.323077016044, 107648.64893355407, -38599.19918692205],
+]
+    regression_x = list()
+    regression_y = list()
+    with open("data/regression_train.csv", "r") as file:
+        reader = csv.reader(file)
+        for line in reader:
+            regression_x.append(float(line[0]))
+            regression_y.append(float(line[1]))
+        
+
+    i = 1
+    for degree in POLYNOMIAL_COEFFICIENTS:
+        fig, axs = plt.subplots()
+        plot_polynomial(axs, regression_x[0], regression_x[len(regression_x)-1], degree, label = "training", color = "blue")
+        axs.set_title("Training on " + str(i) + " Degree")
+        save_figure(fig, "part4_deg" + str(i) + ".pdf")
+        i += 1
+
+
+
 
     
 
