@@ -112,7 +112,7 @@ def plot_polynomial(
 def plot_elbow(axes: Axes, rss_values: Sequence[Number]) -> None:
     """Plot polynomial degree against RSS."""
     # TODO
-    raise NotImplementedError
+    axes.plot(rss_values)
 
 
 def save_figure(figure: plt.Figure, filename: str) -> None:
