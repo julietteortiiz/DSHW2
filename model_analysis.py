@@ -48,10 +48,7 @@ def calculate_y(
     y = coefficients[0]
     count = 1
     for coef in coefficients[1:]:
-        print("Y: " + str(y))
-        print("EQ: " + str(coef) + str(x) + "^" + str(count))
         y += coef * (x ** count)
-        print("After Y: " + str(y))
         count += 1
     return y
 
