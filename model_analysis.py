@@ -122,10 +122,9 @@ def save_figure(figure: plt.Figure, filename: str) -> None:
 
 def main() -> None:
     """Run all required analyses and create the figures listed in the handout."""
-    #Read In Data, convert to correct type
+    #PART1: Read In Data, convert to correct type
     data1979 = read_in_data("data/sea_ice_1979-2012.csv", x_type=["int", "float"])
     
-
     #split into x and y values
     x_values = data1979[0]
     y_values = data1979[1]
@@ -136,7 +135,7 @@ def main() -> None:
 
     
 
-    #Calculate Y
+    #PART 2: Calculate Y
     x_np = np.array(x_values)
     deg1 = calculate_y(x_np, DEGREE_1_COEFFICIENTS)
     fig2, axs = plt.subplots()
@@ -163,6 +162,27 @@ def main() -> None:
     axs.set_title("1979 Polynomial 2nd Degree Residuals")
     plot_scatter(axs, x_values, r2, label="Residuals for Degree2", color = "Blue")
     save_figure(fig4, "part2_residuals2.pdf")
+
+    #PART3
+    data2013 = read_in_data("data/sea_ice_2013-2020.csv", x_type=["int", "float"])
+    x_values_2013 = data2013[0]
+    y_values_2013 = data2013[1]
+
+    fig6, axs = plt.subplots()
+    plot_polynomial(axs, 1979, 2012, DEGREE_1_COEFFICIENTS, label = "Degree 2 Polynomial", color = "Blue")
+    plot_polynomial(axs, 2013, 2020, DEGREE_1_COEFFICIENTS, label = "Degree 2 Polynomial", color = "Red")
+    axs.set_title("1979 and 2013 Degree 1")
+    save_figure(fig6, "part3_pred1.pdf")
+
+    fig7, axs = plt.subplots()
+    plot_polynomial(axs, 1979, 2012, DEGREE_2_COEFFICIENTS, label = "Degree 2 Polynomial", color = "Blue")
+    plot_polynomial(axs, 2013, 2020, DEGREE_2_COEFFICIENTS, label = "Degree 2 Polynomial", color = "Red")
+    axs.set_title("1979 and 2013 Degree 2")
+    save_figure(fig7, "part3_pred2.pdf")
+
+    
+
+
 
 if __name__ == "__main__":
     main()
