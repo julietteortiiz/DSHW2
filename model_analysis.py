@@ -68,8 +68,11 @@ def calculate_residuals(
 
 def residual_sum_of_squares(residuals: Sequence[Number]) -> float:
     """Return the sum of the squared residuals."""
-    # TODO
-    raise NotImplementedError
+    RSS = 0
+    for residual in residuals:
+        RSS += residual ** 2
+    return RSS
+
 
 
 def plot_scatter(
